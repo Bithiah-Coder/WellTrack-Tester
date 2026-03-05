@@ -1,0 +1,83 @@
+:root {
+  --background: #FAFAFA;
+  --foreground: #1F2937;
+
+  --primary: oklch(.627 .265 303.9);        /* purple-500 */
+  --primary-light: oklch(.714 .203 305.504); /* purple-400 */
+  --primary-dark: oklch(.558 .288 302.321);  /* purple-600 */
+
+  --card-bg: #ffffff;
+  --card-radius: 1rem;
+
+  --input-bg: #f3f3f5;
+  --input-border: rgba(0,0,0,0.1);
+
+  --radius: 1rem;
+
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+
+  --spacing-1: .25rem;
+  --spacing-2: .5rem;
+  --spacing-3: .75rem;
+  --spacing-4: 1rem;
+}
+
+/* Global layout */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+/* Screens */
+.screen {
+  max-width: 420px;
+  margin: auto;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Cards */
+.card {
+  background: var(--card-bg);
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: var(--card-radius);
+  border: 1px solid var(--input-border);
+}
+
+/* Inputs */
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0 18px;
+  border-radius: var(--radius);
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  font-size: var(--text-base);
+}
+
+/* Buttons */
+button {
+  width: 100%;
+  padding: 14px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: var(--text-base);
+  font-weight: 500;
+}
+
+button.secondary {
+  background: #777;
+  margin-top: 10px;
+}
