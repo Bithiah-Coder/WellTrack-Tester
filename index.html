@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WellTrack</title>
+
+    <style>
+        body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 20px; }
+        .screen { max-width: 400px; margin: auto; text-align: center; }
+        .hidden { display: none; }
+        .card { background: white; padding: 15px; margin-top: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        input { width: 100%; padding: 10px; margin: 8px 0 15px; border-radius: 6px; border: 1px solid #ccc; }
+        button { width: 100%; padding: 12px; background: #4CAF50; color: white; border: none; border-radius: 6px; cursor: pointer; }
+        button.secondary { background: #777; margin-top: 10px; }
+    </style>
+</head>
+
+<body>
+
+    <section id="welcome-screen" class="screen">
+        <h1>Welcome to WellTrack</h1>
+        <p>Enter your name to begin</p>
+        <input type="text" id="username-input" placeholder="Your name">
+        <button id="start-btn">Continue</button>
+    </section>
+
+    <section id="dashboard" class="screen hidden">
+        <h2>Hello, <span id="display-name"></span></h2>
+
+        <div class="card">
+            <h3>Daily Stats</h3>
+
+            <label>Workout (minutes)</label>
+            <input type="number" id="workout">
+
+            <label>Calories</label>
+            <input type="number" id="calories">
+
+            <label>Water (cups)</label>
+            <input type="number" id="water">
+
+            <label>Sleep (hours)</label>
+            <input type="number" id="sleep">
+
+            <button id="save-btn">Save Today's Stats</button>
+        </div>
+
+        <div class="card">
+            <h3>Latest Saved Stats</h3>
+            <p id="latest-stats">No data saved yet.</p>
+        </div>
+
+        <button id="settings-btn" class="secondary">Account Settings</button>
+    </section>
+
+    <section id="settings-screen" class="screen hidden">
+        <h2>Account Settings</h2>
+
+        <label>Change your name</label>
+        <input type="text" id="new-name">
+
+        <button id="update-name-btn">Update Name</button>
+        <button id="back-btn" class="secondary">Back</button>
+    </section>
+
+    <script>
+        const welcomeScreen = document.getElementById("welcome-screen");
+        const dashboard = document.getElementById("dashboard");
+        const settingsScreen = document.getElementById("settings-screen");
+
+        const usernameInput = document.getElementById("username-input");
+        const displayName = document.getElementById("display-name");
+
+        const workout = document.getElementById("workout");
+        const calories = document.getElementById("calories");
+        const water = document.getElementById("water");
+        const sleep = document.getElementById("sleep");
+
+        const latestStats = document.getElementById("latest-stats");
+
+        window.onload = () => {
+            const savedName = localStorage.getItem("username");
+            const savedStats = JSON.parse(localStorage.getItem("stats"));
+
+            if (savedName) {
+                displayName.textContent = savedName;
+                welcomeScreen.classList.add("hidden");
+                dashboard.classList.remove("hidden");
+            }
+
+            if (savedStats) {
+                latestStats.textContent =
+                    "Workout: " + savedStats.workout + " min | " +
+                    "Calories: " + savedStats.calories + " | " +
+                    "Water: " + savedStats.water + " cups | " +
+                    "Sleep: " + savedStats.sleep + " hrs";
+            }
+        };
+
+        document.getElementById("start-btn").onclick = () => {
+            const name = usernameInput.value.trim();
+            if (!name) return;
+
+            localStorage.setItem("username", name);
+            displayName.textContent = name;
+
+            welcomeScreen.classList.add("hidden");
+            dashboard.classList.remove("hidden");
+        };
+
+        document.getElementById("save-btn").onclick = () => {
+            const stats = {
+                workout: workout.value,
+                calories: calories.value,
+                water: water.value,
+                sleep: sleep.value
+            };
+
+            localStorage.setItem("stats", JSON.stringify(stats));
+
+            latestStats.textContent =
+                "Workout: " + stats.workout + " min | " +
+                "Calories: " + stats.calories + " | " +
+                "Water: " + stats.water + " cups | " +
+                "Sleep: " + stats.sleep + " hrs";
+        };
+
+        document.getElementById("settings-btn").onclick = () => {
+            dashboard.classList.add("hidden");
+            settingsScreen.classList.remove("hidden");
+        };
+
+        document.getElementById("update-name-btn").onclick = () => {
+            const newName = document.getElementById("new-name").value.trim();
+            if (!newName) return;
+
+            localStorage.setItem("username", newName);
+            displayName.textContent = newName;
+
+            settingsScreen.classList.add("hidden");
+            dashboard.classList.remove("hidden");
+        };
+
+        document.getElementById("back-btn").onclick = () => {
+            settingsScreen.classList.add("hidden");
+            dashboard.classList.remove("hidden");
+        };
+    </script>
+
+</body>
+</html>
