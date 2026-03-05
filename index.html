@@ -5,15 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WellTrack</title>
 
-    <style>
-        body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 20px; }
-        .screen { max-width: 400px; margin: auto; text-align: center; }
-        .hidden { display: none; }
-        .card { background: white; padding: 15px; margin-top: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        input { width: 100%; padding: 10px; margin: 8px 0 15px; border-radius: 6px; border: 1px solid #ccc; }
-        button { width: 100%; padding: 12px; background: #4CAF50; color: white; border: none; border-radius: 6px; cursor: pointer; }
-        button.secondary { background: #777; margin-top: 10px; }
-    </style>
+    <!-- External stylesheet -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -65,6 +58,9 @@
     </section>
 
     <script>
+        /* Always reset saved data so every visitor starts fresh */
+        localStorage.clear();
+
         const welcomeScreen = document.getElementById("welcome-screen");
         const dashboard = document.getElementById("dashboard");
         const settingsScreen = document.getElementById("settings-screen");
@@ -80,14 +76,7 @@
         const latestStats = document.getElementById("latest-stats");
 
         window.onload = () => {
-            const savedName = localStorage.getItem("username");
             const savedStats = JSON.parse(localStorage.getItem("stats"));
-
-            if (savedName) {
-                displayName.textContent = savedName;
-                welcomeScreen.classList.add("hidden");
-                dashboard.classList.remove("hidden");
-            }
 
             if (savedStats) {
                 latestStats.textContent =
